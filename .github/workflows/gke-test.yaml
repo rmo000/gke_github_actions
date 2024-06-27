@@ -38,6 +38,7 @@ jobs:
 
     - id: 'make-container-image'
       run: 'docker build . --file DOCKERFILE_LOCATION --tag ${{ vars.GAR_REPO }}'
+      working-directory: WORKING_DIRECTORY
       
     - id: 'push-image'
       run: 'docker push ${{vars.GAR_REPO}}'
