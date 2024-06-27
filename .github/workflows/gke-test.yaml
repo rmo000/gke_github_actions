@@ -16,9 +16,9 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: ${{ gke_github_actions.GKE_CLUSTER }}    # Add your cluster name here.
-  GKE_ZONE: ${{ gke_github_actions.GKE_ZONE }}   # Add your cluster zone here.
-  DEPLOYMENT_NAME: ${{ gke_github_actions.DEPLOYMENT_NAME }} # Add your deployment name here.
+  GKE_CLUSTER: ${{ env.GKE_CLUSTER }}    # Add your cluster name here.
+  GKE_ZONE: ${{ env.GKE_ZONE }}   # Add your cluster zone here.
+  DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }} # Add your deployment name here.
   IMAGE: static-site
 
 jobs:
@@ -45,8 +45,8 @@ jobs:
     # Get the GKE credentials so we can deploy to the cluster
     - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
       with:
-        cluster_name: ${{ gke_github_actions.GKE_CLUSTER }}
-        location: ${{ gke_github_actions.GKE_ZONE }}
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
         credentials: ${{ secrets.GKE_SA_KEY }}
 
     # Build the Docker image
