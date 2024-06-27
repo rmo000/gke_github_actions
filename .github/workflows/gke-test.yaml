@@ -19,19 +19,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 'auth'
+    - name: 'Get auth of GCP'
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: ${{secrets.SA_KEY}}
 
-    - name: 'get-gke-credentials'
+    - name: 'Get GKE Credentials'
       uses: 'google-github-actions/get-gke-credentials@v2'
       with:
         cluster_name: ${{vars.CLUSTER}}
         location: ${{vars.LOCATION}}
 
-    - name: 'make-image'
+    - name: 'Make image and push in Artifact Registry'
       run: |
+        ls
         gcloud auth --quiet configure-docker ${{vars.GAR}}
         docker build -t ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest .
         docker push ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest
