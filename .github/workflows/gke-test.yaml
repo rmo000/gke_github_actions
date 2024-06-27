@@ -33,9 +33,11 @@ jobs:
         cluster_name: ${{vars.CLUSTER}}
         location: ${{vars.LOCATION}}
 
-    # The KUBECONFIG env var is automatically exported and picked up by kubectl.
-    - id: 'get-pods'
-      run: 'kubectl get pods'
-
-    - id: 'configure-docker'
+    - id: 'docker-credential'
       run: 'gcloud --quiet auth configure-docker'
+
+    - id: 'make-container-image'
+      run: 'docker build . --file DOCKERFILE_LOCATION --tag ${{ vars.GAR_REPO }}'
+      
+    - id: 'push-image'
+      run: 'docker push ${{vars.GAR_REPO}}'
