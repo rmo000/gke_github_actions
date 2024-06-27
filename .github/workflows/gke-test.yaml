@@ -38,12 +38,9 @@ jobs:
         gcloud auth --quiet configure-docker ${{vars.GAR}}
         docker build -t ${{vars.GAR_REPO}}/${{vars.IMAGE}}:v1 .
         docker push ${{vars.GAR_REPO}}/${{vars.IMAGE}}:v1
+
     - name: 'Deploy container in GKE'
-      uses: google-github-actions/deploy-gke-container@v0.1
-      with:
-        image: ${{vars.GAR_REPO}}/${{vars.IMAGE}}
-        app_name: ${{vars.APP_NAME}}
-        region: ${{vars.LOCATION}}
-        cluster_name: ${{vars.CLUSTER}}
-        project_id: ${{secrets.GCP_PROJECT}}
-        expose: 80
+      run: |
+        kubectl run ${{vars.APP_NAME}} --image ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest-port 80
+        
+        
