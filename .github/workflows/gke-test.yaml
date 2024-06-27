@@ -41,6 +41,6 @@ jobs:
 
     - name: 'Deploy container in GKE'
       run: |
-        kubectl run ${{vars.APP_NAME}} --image ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest -port 80
+        kubectl run ${{vars.APP_NAME}} --image ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest --port 80
         
         
