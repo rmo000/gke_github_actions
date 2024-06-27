@@ -32,7 +32,7 @@ jobs:
 
     - name: 'Make image and push in Artifact Registry'
       run: |
-        ls
+        ls /
         gcloud auth --quiet configure-docker ${{vars.GAR}}
         docker build -t ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest .
         docker push ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest
