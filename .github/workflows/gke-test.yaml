@@ -15,25 +15,22 @@ on:
       - main
 
 jobs:
-  job_id:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
 
     steps:
-    - id: 'auth'
+    - name: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: ${{secrets.SA_KEY}}
 
-    - id: 'get-credentials'
+    - name: 'get-gke-credentials'
       uses: 'google-github-actions/get-gke-credentials@v2'
       with:
         cluster_name: ${{vars.CLUSTER}}
         location: ${{vars.LOCATION}}
 
-    - id: 'make-image'
+    - name: 'make-image'
       run: |
         gcloud auth --quiet configure-docker ${{vars.GAR}}
         docker build . -t ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest -f Dockerfile
