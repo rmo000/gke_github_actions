@@ -36,5 +36,5 @@ jobs:
     - id: 'make-image'
       run: |
         gcloud auth --quiet configure-docker ${{vars.GAR}}
-        docker build . -t ${{vars.GAR_REPO}}:latest
-        docker push ${{vars.GAR_REPO}}:latest
+        docker build . -t ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest
+        docker push ${{vars.GAR_REPO}}/${{vars.IMAGE}}:latest
